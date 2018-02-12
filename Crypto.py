@@ -7,10 +7,13 @@ init(convert=True)
 page = requests.get('https://coinmarketcap.com/')
 tree = html.fromstring(page.content)
 
-Lines = 4
-SpaceFix = 8
+#Control Variables
+Lines = 4			#Controls how many lines the program shows (5 is generally the max)
+SpaceFix = 8		#The higher this is, the smaller the spaces are unless it surpasses the max length of the scraped date
+Colour = 0			#If 0, the percents will be in colour, if anything else, they'll be without colour
+StartVar = 0		#Adds spaces to the start of the data so that it isn't right beside the edge of the screen. If its 1 it'll calculate the space based off Lines and SpaceFix. If not 1, it wont add the space 
+
 StartSpace = ""
-StartVar = 0
 if StartVar == 1:
     for x in range(0, (SpaceFix - Lines)):
         StartSpace += " "
@@ -66,10 +69,11 @@ for x in range(1, len(Name)):
     if MaxLen > len(Name[x] + "  " + Price[x - 1]):
         for y in range(0, (MaxLen - len(Name[x] + "   " + Price[x - 1])) - SpaceFix):
             Space += " "
-    if Percent[x - 1].find("-") == -1:
-        Percent[x - 1] = "[92m" + Percent[x - 1] + "[0m"
-    else:
-        Percent[x - 1] = "[91m" + Percent[x - 1] + "[0m"
+    if Colour == 0:
+        if Percent[x - 1].find("-") == -1:
+            Percent[x - 1] = "[92m" + Percent[x - 1] + "[0m"
+        else:
+            Percent[x - 1] = "[91m" + Percent[x - 1] + "[0m"
     Price[x - 1] += "  " + Space2 + Percent[x - 1]
     if ((x % Lines) == 0) and (x !=0):
         print(Name[x], "  ",  Space, Price[x - 1])
