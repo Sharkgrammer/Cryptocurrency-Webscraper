@@ -18,11 +18,10 @@ if StartVar == 1:
     for x in range(0, (SpaceFix - Lines)):
         StartSpace += " "
     
-Name = tree.xpath('//a[@class="currency-name-container"]/text()')
+Name = tree.xpath('//a[@class="currency-name-container link-secondary"]/text()')
 Name.insert(0,"Boopleboop")
 Price = tree.xpath('//a[@class="price"]/text()')
 Welp = tree.xpath('//td[@class="no-wrap percent-24h  negative_change text-right" or "no-wrap percent-24h  positive_change  text-right"]/text()')
-
 Percent = []
 Meh = []
 MaxLen = 0
