@@ -4,28 +4,30 @@ import requests
 from colorama import init, Fore, Back, Style
 init(convert=True)
 
-#https://coinmarketcap.com/all/views/all/
-page = requests.get('https://coinmarketcap.com/')
-tree = html.fromstring(page.content)
-
 #Control Variables
 Lines = 4           #Controls how many lines the program shows (5 is generally the max)
 SpaceFix = 8        #The higher this is, the smaller the spaces are unless it surpasses the max length of the scraped date
 Colour = 0          #If 0, the percents will be in colour, if anything else, they'll be without colour
 StartVar = 0        #Adds spaces to the start of the data so that it isn't right beside the edge of the screen. If its 1 it'll calculate the space based off Lines and SpaceFix. If not 1, it wont add the space 
 
+pageStr = 'https://coinmarketcap.com/'
 #If a number is passed when calling the program, have it set as the line variable
 if len(sys.argv) != 1:
     try:
         Lines = int(sys.argv[1])
     except:
         Lines = 4
+    if (sys.argv[1] == "all"):
+        pageStr = 'https://coinmarketcap.com/all/views/all/'
 
 StartSpace = ""
 if StartVar == 1:
     for x in range(0, (SpaceFix - Lines)):
         StartSpace += " "
-    
+
+page = requests.get(pageStr)
+tree = html.fromstring(page.content)
+
 Name = tree.xpath('//a[@class="currency-name-container link-secondary"]/text()')
 Name.insert(0,"Boopleboop")
 Price = tree.xpath('//a[@class="price"]/text()')
